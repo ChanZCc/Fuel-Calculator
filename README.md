@@ -16,4 +16,4 @@
 1. 用 IDE 打开本项目
 2. 选择解释器为 **Python 3.14**
 
--chanforone@gmail.com
+chanforone@gmail.com
