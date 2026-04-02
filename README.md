@@ -15,3 +15,5 @@
 ## 运行方式（IDE）
 1. 用 IDE 打开本项目
 2. 选择解释器为 **Python 3.14**
+
+-chanforone@gmail.com
