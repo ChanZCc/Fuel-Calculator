@@ -50,7 +50,7 @@ fuel_type = {
     "0": "0#柴油"
 }
 
-def get_fuel_price_from_qukuaiyouhua(city,fuel_code):
+def get_fuel_price_from_qiyoujiage(city, fuel_code):
     """
     从 http://www.qiyoujiage.com/guangdong.shtml 获取广东省最新油价
     :return: 指定类型油价（元/升）
@@ -83,6 +83,20 @@ def get_fuel_price_from_qukuaiyouhua(city,fuel_code):
         print(f"获取油价失败: {e}")
     return None
 
+def customize_fuel_price():
+    """
+    允许用户自定义油价
+    :return: 用户输入的油价（元/升）
+    """
+    while True:
+        try:
+            price = float(input("请输入当前的油价（元/升）: "))
+            if price <= 0:
+                print("油价必须为正数，请重新输入。")
+                continue
+            return price
+        except ValueError:
+            print("输入无效，请输入一个数字。")
 
 def calculate_fuel_cost(distance, fuel_efficiency, fuel_price):
     """
@@ -102,21 +116,24 @@ def calculate_fuel_cost(distance, fuel_efficiency, fuel_price):
 # 示例使用
 if __name__ == "__main__":
     # 单次行程距离
-    distance = 120  
+    distance = 97  
     # 单次行程油耗
-    fuel_efficiency = 6.2
+    fuel_efficiency = 6
     # 修改为你所在的城市
     city_name = "广东"
     # 修改为你需要的油品类型
-    fuel_code = "95"
+    fuel_code = "92"
 
     # 方案1: 爬取指定城市指定类型油价
-    fuel_price = get_fuel_price_from_qukuaiyouhua(city_name, fuel_code)
+    fuel_price = get_fuel_price_from_qiyoujiage(city_name, fuel_code)
     if fuel_price:
         print(f"获取到的{city_name}{fuel_type.get(fuel_code, '92#汽油')}油价: {fuel_price} 元/升")
     else:
         print(f"未能获取到{city_name}{fuel_type.get(fuel_code, '92#汽油')}油价，使用本地默认油价。")
         fuel_price = 7.59
+
+    # 方案2: 用户自定义油价
+    fuel_price = customize_fuel_price() 
 
     cost = calculate_fuel_cost(distance, fuel_efficiency, fuel_price)
     print(f"行驶 {distance} 公里需要的油费总成本为: {cost:.2f} 元")
